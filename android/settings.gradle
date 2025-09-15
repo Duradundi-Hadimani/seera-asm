@@ -1,0 +1,29 @@
+// settings.gradle
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "android"
+include ':app'
+
+// --- THIS PART WAS MISSING ---
+include ':capacitor-android'
+project(':capacitor-android').projectDir = new File('capacitor-android')
+// ------------------------------
+
+include ':capacitor-cordova-android-plugins'
+project(':capacitor-cordova-android-plugins').projectDir = new File('capacitor-cordova-android-plugins')
+
+apply from: 'capacitor.settings.gradle'

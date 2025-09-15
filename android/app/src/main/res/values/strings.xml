@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">seera-asm</string>
+    <string name="title_activity_main">seera-asm</string>
+    <string name="package_name">com.seeraasm.app</string>
+    <string name="custom_url_scheme">com.seeraasm.app</string>
+</resources>

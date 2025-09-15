@@ -1,0 +1,31 @@
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Capacitor / Ionic
+www/
+build/
+dist/
+
+# Android
+android/app/build/
+android/.gradle/
+android/.idea/
+android/local.properties
+
+# iOS
+ios/build/
+ios/Pods/
+ios/DerivedData/
+ios/*.xcworkspace
+ios/.idea/
+
+# JetBrains / VSCode
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+

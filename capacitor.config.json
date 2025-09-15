@@ -1,0 +1,9 @@
+{
+  "appId": "com.seeraasm.app",
+  "appName": "seera-asm",
+  "webDir": "www",
+  "server": {
+    "url": "https://asm-aljouf.seeraarabia.com",
+    "cleartext": false
+  }
+}
