@@ -13,14 +13,17 @@ workflows:
       - name: Sync Capacitor
         script: |
           npx cap sync ios
-      - name: Build iOS
+      - name: Build iOS (without signing)
         script: |
           cd ios
           xcodebuild -workspace App/App.xcworkspace \
             -scheme App \
             -sdk iphoneos \
             -configuration Release \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             archive -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive
     artifacts:
       - $CM_BUILD_DIR/ios/archive/App.xcarchive
-      - $CM_BUILD_DIR/ios/archive/App.xcarchive/dSYMs
+
