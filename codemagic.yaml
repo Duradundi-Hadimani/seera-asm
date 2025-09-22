@@ -1,6 +1,6 @@
 workflows:
-  ios-capacitor:
-    name: iOS Capacitor Build
+  ios-capacitor-free:
+    name: iOS Capacitor Build (Free Apple ID)
     environment:
       vars:
         NODE_VERSION: 18
@@ -13,17 +13,54 @@ workflows:
       - name: Sync Capacitor
         script: |
           npx cap sync ios
-      - name: Build iOS (without signing)
+      - name: Build & Export iOS (Debug, Free Apple ID)
         script: |
           cd ios
+          # 1️⃣ Archive the app
           xcodebuild -workspace App/App.xcworkspace \
             -scheme App \
             -sdk iphoneos \
-            -configuration Release \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO \
-            archive -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive
+            -configuration Debug \
+            -allowProvisioningUpdates \
+            -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive \
+            archive
+          
+          # 2️⃣ Export .ipa for device testing
+          xcodebuild -exportArchive \
+            -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive \
+            -exportPath $CM_BUILD_DIR/ios/archive/App \
+            -exportOptionsPlist exportOptions.plist
     artifacts:
-      - $CM_BUILD_DIR/ios/archive/App.xcarchive
+      - $CM_BUILD_DIR/ios/archive/App/*.ipa
+
+
+
+# workflows:
+#   ios-capacitor:
+#     name: iOS Capacitor Build
+#     environment:
+#       vars:
+#         NODE_VERSION: 18
+#       xcode: latest
+#       cocoapods: default
+#     scripts:
+#       - name: Install dependencies
+#         script: |
+#           npm install
+#       - name: Sync Capacitor
+#         script: |
+#           npx cap sync ios
+#       - name: Build iOS (without signing)
+#         script: |
+#           cd ios
+#           xcodebuild -workspace App/App.xcworkspace \
+#             -scheme App \
+#             -sdk iphoneos \
+#             -configuration Release \
+#             CODE_SIGN_IDENTITY="" \
+#             CODE_SIGNING_REQUIRED=NO \
+#             CODE_SIGNING_ALLOWED=NO \
+#             archive -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive
+#     artifacts:
+#       - $CM_BUILD_DIR/ios/archive/App.xcarchive
 
