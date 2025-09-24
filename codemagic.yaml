@@ -3,14 +3,14 @@ workflows:
     name: iOS Capacitor Build
     environment:
       groups:
-        - appstore_credentials   # ✅ all Apple secrets live here
+        - appstore_credentials   # contains APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY, APPLE_DEVELOPMENT_TEAM
       vars:
         NODE_VERSION: 18
       xcode: latest
       cocoapods: default
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: com.your.bundle.id
+        bundle_identifier: com.seeraasm.app   # replace with your real bundle ID
     scripts:
       - name: Install dependencies
         script: |
@@ -41,10 +41,6 @@ workflows:
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: false
-      email:
-        recipients:
-          - your@email.com
-
 
 # workflows:
 #   ios-capacitor:
