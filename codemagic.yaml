@@ -1,11 +1,14 @@
 workflows:
-  ios-capacitor-free:
-    name: iOS Capacitor Build (Free Apple ID)
+  ios-capacitor:
+    name: iOS Capacitor Build
     environment:
       vars:
         NODE_VERSION: 18
       xcode: latest
       cocoapods: default
+      ios_signing:
+        distribution_type: app-store
+        bundle_identifier: com.your.bundle.id
     scripts:
       - name: Install dependencies
         script: |
@@ -13,26 +16,29 @@ workflows:
       - name: Sync Capacitor
         script: |
           npx cap sync ios
-      - name: Build & Export iOS (Debug, Free Apple ID)
+      - name: Build iOS
         script: |
           cd ios
-          # 1️⃣ Archive the app
           xcodebuild -workspace App/App.xcworkspace \
             -scheme App \
             -sdk iphoneos \
-            -configuration Debug \
-            -allowProvisioningUpdates \
-            -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive \
-            archive
-          
-          # 2️⃣ Export .ipa for device testing
+            -configuration Release \
+            archive -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive \
+            DEVELOPMENT_TEAM="$APPLE_DEVELOPMENT_TEAM"
+      - name: Export IPA
+        script: |
           xcodebuild -exportArchive \
             -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive \
-            -exportPath $CM_BUILD_DIR/ios/archive/App \
-            -exportOptionsPlist exportOptions.plist
+            -exportPath $CM_BUILD_DIR/ios/export \
+            -exportOptionsPlist ios/exportOptions.plist
     artifacts:
-      - $CM_BUILD_DIR/ios/archive/App/*.ipa
-
+      - $CM_BUILD_DIR/ios/export/*.ipa
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_testflight: false
 
 
 # workflows:
