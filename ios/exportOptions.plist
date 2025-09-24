@@ -1,14 +1,34 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>method</key>
-  <string>app-store</string>
-  <key>teamID</key>
-  <string>${APPLE_DEVELOPMENT_TEAM}</string>
-  <key>uploadBitcode</key>
-  <true/>
-  <key>uploadSymbols</key>
-  <true/>
+    <!-- Export method -->
+    <key>method</key>
+    <string>app-store</string>
+
+    <!-- Team ID for automatic signing -->
+    <key>teamID</key>
+    <string>${APPLE_DEVELOPMENT_TEAM}</string>
+
+    <!-- Include Bitcode in the archive -->
+    <key>uploadBitcode</key>
+    <true/>
+
+    <!-- Include symbols for crash reporting -->
+    <key>uploadSymbols</key>
+    <true/>
+
+    <!-- Enable automatic signing -->
+    <key>signingStyle</key>
+    <string>automatic</string>
+
+    <!-- Provisioning profile mapping (optional; Codemagic usually handles this automatically) -->
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.seeraasm.app</key>
+        <string>Automatic</string>
+    </dict>
 </dict>
 </plist>
+
