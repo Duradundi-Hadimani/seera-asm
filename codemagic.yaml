@@ -11,6 +11,7 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.seeraasm.app   # replace with your real bundle ID
+        automatic: true
     scripts:
       - name: Install dependencies
         script: |
