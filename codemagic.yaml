@@ -2,12 +2,14 @@ workflows:
   ios-capacitor:
     name: iOS Capacitor Build
     environment:
+      groups:
+        - appstore_credentials   # ✅ all Apple secrets live here
       vars:
         NODE_VERSION: 18
       xcode: latest
       cocoapods: default
       ios_signing:
-        distribution_type: app-store
+        distribution_type: app_store
         bundle_identifier: com.your.bundle.id
     scripts:
       - name: Install dependencies
@@ -39,6 +41,9 @@ workflows:
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: false
+      email:
+        recipients:
+          - your@email.com
 
 
 # workflows:
