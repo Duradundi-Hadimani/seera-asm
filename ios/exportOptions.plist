@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -19,16 +18,17 @@
     <key>uploadSymbols</key>
     <true/>
 
-    <!-- Enable automatic signing -->
+    <!-- Explicit signing style -->
     <key>signingStyle</key>
-    <string>automatic</string>
+    <string>manual</string>
 
-    <!-- Provisioning profile mapping (optional; Codemagic usually handles this automatically) -->
+    <!-- Provisioning profile mapping -->
     <key>provisioningProfiles</key>
     <dict>
         <key>com.seeraasm.app</key>
-        <string>Automatic</string>
+        <string>SeeraASM AppStore Profile</string>
     </dict>
 </dict>
 </plist>
+
 
