@@ -3,7 +3,7 @@ workflows:
     name: iOS Capacitor Build
     environment:
       groups:
-        - appstore_credentials   # APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_KEY_IDENTIFIER, APP_STORE_CONNECT_PRIVATE_KEY, APPLE_DEVELOPMENT_TEAM, APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD, APP_STORE_PROVISION_PROFILE
+        - appstore_credentials   # Contains all your Apple env vars
       vars:
         NODE_VERSION: 18
       xcode: latest
@@ -11,9 +11,6 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.seeraasm.app
-        certificate: $APPLE_CERTIFICATE
-        certificate_password: $APPLE_CERTIFICATE_PASSWORD
-        provisioning_profile: $APP_STORE_PROVISION_PROFILE
     scripts:
       - name: Install dependencies
         script: |
@@ -44,6 +41,7 @@ workflows:
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: false
+
 
 # workflows:
 #   ios-capacitor:
