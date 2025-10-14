@@ -2,33 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <!-- Export method -->
     <key>method</key>
     <string>app-store</string>
-
-    <!-- Team ID for automatic signing -->
-    <key>teamID</key>
-    <string>${APPLE_DEVELOPMENT_TEAM}</string>
-
-    <!-- Include Bitcode in the archive -->
-    <key>uploadBitcode</key>
-    <true/>
-
-    <!-- Include symbols for crash reporting -->
-    <key>uploadSymbols</key>
-    <true/>
-
-    <!-- Explicit signing style -->
     <key>signingStyle</key>
     <string>manual</string>
-
-    <!-- Provisioning profile mapping -->
+    <key>teamID</key>
+    <string>NSGRJDU336</string>
     <key>provisioningProfiles</key>
     <dict>
         <key>com.seeraasm.app</key>
-        <string>SeeraASM AppStore Profile</string>
+        <string>SeeraASM AppStore profile-1</string>
     </dict>
 </dict>
 </plist>
-
-
