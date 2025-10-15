@@ -9,20 +9,10 @@ workflows:
         - appstore_credentials
       vars:
         NODE_VERSION: 18
+        APPLE_DEVELOPMENT_TEAM: NSGRJDU336
+        BUNDLE_ID: com.seeraasm.app
       xcode: latest
       cocoapods: default
-
-    # ✅ Proper code signing section (moved OUTSIDE environment)
-    ios_signing:
-      distribution_type: app_store
-      bundle_identifier: com.seeraasm.app
-      provisioning_profiles:
-        - name: SeeraASM AppStore profile
-          path: $APP_STORE_PROVISION_PROFILE
-      certificates:
-        - certificate: $APPLE_CERTIFICATE
-          certificate_password: $APPLE_CERTIFICATE_PASSWORD
-      team_id: NSGRJDU336
 
     scripts:
       - name: Install dependencies
