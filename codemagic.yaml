@@ -2,6 +2,8 @@ workflows:
   ios-capacitor:
     name: iOS Capacitor Build
     max_build_duration: 60
+    instance_type: mac_mini_m2
+
     environment:
       groups:
         - appstore_credentials
@@ -9,19 +11,28 @@ workflows:
         NODE_VERSION: 18
       xcode: latest
       cocoapods: default
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.seeraasm.app
-        certificate: $APPLE_CERTIFICATE
-        certificate_password: $APPLE_CERTIFICATE_PASSWORD
-        provisioning_profile: $APP_STORE_PROVISION_PROFILE
+
+    # ✅ Proper code signing section (moved OUTSIDE environment)
+    ios_signing:
+      distribution_type: app_store
+      bundle_identifier: com.seeraasm.app
+      provisioning_profiles:
+        - name: SeeraASM AppStore profile
+          path: $APP_STORE_PROVISION_PROFILE
+      certificates:
+        - certificate: $APPLE_CERTIFICATE
+          certificate_password: $APPLE_CERTIFICATE_PASSWORD
+      team_id: NSGRJDU336
+
     scripts:
       - name: Install dependencies
         script: |
           npm ci
+
       - name: Sync Capacitor with iOS
         script: |
           npx cap sync ios
+
       - name: Build iOS app
         script: |
           cd ios/App
@@ -35,49 +46,20 @@ workflows:
             DEVELOPMENT_TEAM="$APPLE_DEVELOPMENT_TEAM" \
             CODE_SIGN_STYLE=Manual \
             PROVISIONING_PROFILE_SPECIFIER="SeeraASM AppStore profile"
+
       - name: Export IPA
         script: |
           xcodebuild -exportArchive \
             -archivePath $CM_BUILD_DIR/ios/App.xcarchive \
             -exportOptionsPlist ios/exportOptions.plist \
             -exportPath $CM_BUILD_DIR/ios_output
+
     artifacts:
       - $CM_BUILD_DIR/ios_output/*.ipa
+
     publishing:
       app_store_connect:
         api_key: $APP_STORE_CONNECT_PRIVATE_KEY
         key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
         issuer_id: $APP_STORE_CONNECT_ISSUER_ID
         submit_to_testflight: false
-
-
-
-# workflows:
-#   ios-capacitor:
-#     name: iOS Capacitor Build
-#     environment:
-#       vars:
-#         NODE_VERSION: 18
-#       xcode: latest
-#       cocoapods: default
-#     scripts:
-#       - name: Install dependencies
-#         script: |
-#           npm install
-#       - name: Sync Capacitor
-#         script: |
-#           npx cap sync ios
-#       - name: Build iOS (without signing)
-#         script: |
-#           cd ios
-#           xcodebuild -workspace App/App.xcworkspace \
-#             -scheme App \
-#             -sdk iphoneos \
-#             -configuration Release \
-#             CODE_SIGN_IDENTITY="" \
-#             CODE_SIGNING_REQUIRED=NO \
-#             CODE_SIGNING_ALLOWED=NO \
-#             archive -archivePath $CM_BUILD_DIR/ios/archive/App.xcarchive
-#     artifacts:
-#       - $CM_BUILD_DIR/ios/archive/App.xcarchive
-
