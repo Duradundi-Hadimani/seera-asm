@@ -31,7 +31,7 @@ workflows:
             archive \
             -archivePath $CM_BUILD_DIR/ios/App.xcarchive \
             DEVELOPMENT_TEAM="$APPLE_DEVELOPMENT_TEAM" \
-            CODE_SIGN_STYLE="Manual" \
+            CODE_SIGN_STYLE=Manual \
             PROVISIONING_PROFILE_SPECIFIER="SeeraASM AppStore profile-1"
       - name: Export IPA
         script: |
